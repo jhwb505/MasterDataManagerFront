@@ -1,0 +1,4 @@
+# MasterDataManagerFront開発ガイド
+
+
+
