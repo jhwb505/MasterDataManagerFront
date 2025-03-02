@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pregen": "./docs/download.sh",
+    "pregen": "./openapi/downloadDocs.sh",
     "gen": "orval"
   },
   "dependencies": {
