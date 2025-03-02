@@ -1,14 +1,14 @@
-import {defaultConfig} from 'orval'
+import {defineConfig} from 'orval'
 
 export default defineConfig ({
     api: {
         input: {
-            target: 'openapi/openapi-docs.yaml',
-        }
+            target: 'openapi/api-docs.yaml',
+        },
         output: {
             target: 'src/gen/endpoints',
             schemas: 'src/gen/models',
-            mode: 'tag-split',
+            mode: 'tags-split',
             client: 'swr',
             override: {
                 query: {
@@ -25,7 +25,7 @@ export default defineConfig ({
     },
     zod: {
         input: {
-            target: 'openapi/openapi-docs.yaml',
+            target: 'openapi/api-docs.yaml',
         },
         output: {
             mode: 'tags-split',
