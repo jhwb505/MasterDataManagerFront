@@ -19,7 +19,7 @@ export const init: () => Promise<void> = async () : Promise<void> => {
         const baseUrl = await fetchBaseUrl()
         apiClient = axios.create({
             withCredentials: true,
-            baseURL: `${baseUrl}/xxx/api`,
+            baseURL: `${baseUrl}`,
         })
         apiClient.interceptors.response.use(
             (response:AxiosResponse<any,any>): AxiosResponse<any,any> => response,
