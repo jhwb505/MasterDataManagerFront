@@ -4,9 +4,9 @@ import { ForbiddenError } from './ForbiddenError'
 
 let apiClient: AxiosInstance
 
-async function fetchBaseUrl() : Promise<any> {
+async function fetchBaseUrl() {
     try {
-        const res : AxiosResponse<any,any> = await axios.get('api/config')
+        const res = await axios.get('api/config')
         return res.data.baseUrl
     }catch (error){
         console.error('Failed fetching base URL:', error)
@@ -14,7 +14,7 @@ async function fetchBaseUrl() : Promise<any> {
     }
 }
 
-export const init: () => Promise<void> = async () : Promise<void> => {
+export const init = async () => {
     if(!apiClient){
         const baseUrl = await fetchBaseUrl()
         apiClient = axios.create({
@@ -22,8 +22,8 @@ export const init: () => Promise<void> = async () : Promise<void> => {
             baseURL: `${baseUrl}`,
         })
         apiClient.interceptors.response.use(
-            (response:AxiosResponse<any,any>): AxiosResponse<any,any> => response,
-            (error: any) : Promise<never> => {
+            (response) => response,
+            (error) => {
                 if(error?.response?.status === 403){
                     throw new ForbiddenError()
                 }
@@ -43,8 +43,8 @@ export const customInstance = async <T>(
     return apiClient({
         ...config,
         ...options,
-        paramSerializer: function (params){
-            return qs.stringfy(params, { arrayFormat: 'repeat' })
+        paramsSerializer: function (params){
+            return qs.stringify(params, { arrayFormat: 'repeat' })
         },
     }).then(({data}) => data)
 }

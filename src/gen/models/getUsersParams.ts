@@ -5,9 +5,7 @@
  * OpenAPI spec version: v0
  */
 
-export interface TaskDTO {
-  /** タスクID */
-  id: number;
-  /** タスクのタイトル */
-  title: string;
-}
+export type GetUsersParams = {
+id?: string;
+role?: string;
+};

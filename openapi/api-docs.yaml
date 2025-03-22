@@ -5,295 +5,57 @@ info:
 servers:
 - url: http://localhost:8080
   description: Generated server url
-tags:
-- name: tasks
-  description: タスク関連のAPI
-- name: opts
-  description: 運用監視関連のAPI
 paths:
-  /tasks/{taskId}:
+  /users:
     get:
       tags:
-      - tasks
-      summary: タスク取得
-      description: 指定されたIDのタスクを1件取得します
-      operationId: showTask
+      - Users
+      summary: ユーザー情報一覧
+      description: ユーザー情報一覧を取得する
+      operationId: getUsers
       parameters:
-      - name: taskId
-        in: path
-        description: 詳細を取得するタスクのID
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TaskDTO'
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceNotFoundError'
-    put:
-      tags:
-      - tasks
-      summary: タスク更新
-      description: 指定されたタスクをリクエストボディの内容で上書きします
-      operationId: editTask
-      parameters:
-      - name: taskId
-        in: path
-        description: 更新するタスクのID
-        required: true
-        schema:
-          minimum: 1
-          type: integer
-          format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TaskForm'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TaskDTO'
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceNotFoundError'
-    delete:
-      tags:
-      - tasks
-      summary: タスク削除
-      description: 指定されたタスクを削除します
-      operationId: deleteTask
-      parameters:
-      - name: taskId
-        in: path
-        description: 更新するタスクのID
-        required: true
-        schema:
-          minimum: 1
-          type: integer
-          format: int64
-      responses:
-        "204":
-          description: No Content
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceNotFoundError'
-  /tasks/:
-    get:
-      tags:
-      - tasks
-      summary: タスク一覧取得
-      description: タスクの一覧を取得できます
-      operationId: listTasks
-      parameters:
-      - name: limit
+      - name: id
         in: query
-        description: リストに含まれるリソースの最大値
-        required: true
+        required: false
         schema:
-          maximum: 100
-          minimum: 1
-          type: integer
-          format: int32
-          default: 10
-      - name: offset
+          type: string
+          default: ""
+      - name: role
         in: query
-        description: オフセット
-        required: true
+        required: false
         schema:
-          minimum: 0
-          type: integer
-          format: int64
-          default: 0
+          type: string
+          default: ""
       responses:
         "200":
-          description: OK
+          description: 200 OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskListDTO'
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-    post:
-      tags:
-      - tasks
-      summary: タスク作成
-      description: タスクを新規作成します
-      operationId: createTask
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TaskForm'
-        required: true
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TaskDTO'
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-  /samples:
-    get:
-      tags:
-      - sample-controller
-      operationId: index
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/SampleDTO'
-  /health:
-    get:
-      tags:
-      - opts
-      operationId: healthGet
-      responses:
-        "200":
-          description: OK
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+        "500":
+          description: Internal Server Error
 components:
   schemas:
-    TaskDTO:
-      required:
-      - id
-      - title
+    UserResponse:
       type: object
       properties:
-        id:
-          type: integer
-          description: タスクID
-          format: int64
-        title:
+        userId:
           type: string
-          description: タスクのタイトル
-    BadRequestError:
-      required:
-      - detail
-      - invalid-params
-      - title
-      type: object
-      properties:
-        title:
+          description: ユーザーID
+          example: MDM00001
+        lastName:
           type: string
-          description: エラーのタイトル
-        detail:
+          description: 姓
+          example: Yamada
+        firstName:
           type: string
-          description: エラーの詳細
-        invalid-params:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidParam'
-      description: リクエストが不正
-    InvalidParam:
-      required:
-      - name
-      - reason
-      type: object
-      properties:
-        name:
+          description: 名
+          example: Taro
+        role:
           type: string
-          description: エラーが発生したフィールド名
-        reason:
-          type: string
-          description: エラーの理由
-      description: 不正なリクエストについての詳細
-    ResourceNotFoundError:
-      required:
-      - detail
-      - title
-      type: object
-      properties:
-        title:
-          type: string
-          description: エラーのタイトル
-        detail:
-          type: string
-          description: エラーの詳細
-      description: 指定したリソースが存在しない
-    TaskForm:
-      required:
-      - title
-      type: object
-      properties:
-        title:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: 作成されるタスクのタイトル
-    PageDTO:
-      required:
-      - limit
-      - offset
-      - size
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: リクエストされた limit
-          format: int32
-        offset:
-          type: integer
-          description: リクエストされた offset
-          format: int64
-        size:
-          type: integer
-          description: 取得できた件数
-          format: int32
-      description: ページング情報
-    TaskListDTO:
-      required:
-      - results
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageDTO'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskDTO'
-      description: タスクのリスト
-    SampleDTO:
-      type: object
-      properties:
-        content:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
+          description: 役割
+          example: OPERATOR
+      description: ユーザー情報取得のレスポンス

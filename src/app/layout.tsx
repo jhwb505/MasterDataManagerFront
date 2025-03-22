@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { HeroUIProvider } from "@heroui/react";
 import Header from "@/components/Header";
+import { SWRProvider } from '../providers/SWRProvider';
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 
 export const metadata: Metadata = {
@@ -17,12 +19,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <HeroUIProvider>
-          <Header />
-          <main>
-          {children}
-          </main>
-        </HeroUIProvider>
+        <SWRProvider>
+          <HeroUIProvider>
+            <NuqsAdapter>
+              <Header />
+              <main className="">{children}</main>
+            </NuqsAdapter>
+          </HeroUIProvider>
+        </SWRProvider>
       </body>
     </html>
   );
