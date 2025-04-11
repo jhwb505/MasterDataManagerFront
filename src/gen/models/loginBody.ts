@@ -5,9 +5,4 @@
  * OpenAPI spec version: v0
  */
 
-export interface TaskDTO {
-  /** タスクID */
-  id: number;
-  /** タスクのタイトル */
-  title: string;
-}
+export type LoginBody = {[key: string]: string};

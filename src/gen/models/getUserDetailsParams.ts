@@ -5,7 +5,7 @@
  * OpenAPI spec version: v0
  */
 
-export interface SampleDTO {
-  content?: string;
-  timestamp?: string;
-}
+export type GetUserDetailsParams = {
+emailAddress: string;
+versionId?: number;
+};

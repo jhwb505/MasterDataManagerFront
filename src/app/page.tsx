@@ -1,17 +1,14 @@
-'use client'
+import UserRegisterForm from '@/components/UserRegisterForm/UserRegisterForm'
+import React from 'react'
 
-import React from "react";
-import {Button} from "@heroui/react";
-import Link from "next/link";
-
-export default function App() {
+const TopPage = () => {
   return (
-    <>
-    <div className="relative min-h-screen">
-      <Link href="/knowledge" className="fixed bottom-4 right-4 m-4">
-        <Button color="primary" variant="shadow" radius="full">学ぶ</Button>
-      </Link>
-    </div>
-    </>
-  );
+    <main className='flex min-h-screen flex-col items-center p-24'>
+      
+    <h2 className="font-semibold text-2xl mb-4">新規登録</h2>
+    <UserRegisterForm />
+    </main>
+  )
 }
+
+export default TopPage
