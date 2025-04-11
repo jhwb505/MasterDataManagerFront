@@ -5,7 +5,4 @@
  * OpenAPI spec version: v0
  */
 
-export type GetUsersParams = {
-id?: string;
-role?: string;
-};
+export type LoginBody = {[key: string]: string};

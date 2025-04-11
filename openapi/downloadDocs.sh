@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_DOCS_URL="http://localhost:8080/docs/api-docs.yaml"
+API_DOCS_URL="http://localhost:8080/public/docs/api-docs.yaml"
 OUTPUT_DIR="./openapi"
 OUTPUT_FILE="${OUTPUT_DIR}/api-docs.yaml"
 

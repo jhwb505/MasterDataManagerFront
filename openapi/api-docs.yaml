@@ -6,56 +6,71 @@ servers:
 - url: http://localhost:8080
   description: Generated server url
 paths:
-  /users:
+  /public/api/auth/login:
+    post:
+      tags:
+      - public-auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+  /api/v1/user/details:
     get:
       tags:
-      - Users
-      summary: ユーザー情報一覧
-      description: ユーザー情報一覧を取得する
-      operationId: getUsers
+      - authenticated-resource-api-controller
+      summary: ユーザー情報詳細取得
+      description: ユーザー情報詳細を取得する
+      operationId: getUserDetails
       parameters:
-      - name: id
+      - name: emailAddress
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: versionId
         in: query
         required: false
         schema:
-          type: string
-          default: ""
-      - name: role
-        in: query
-        required: false
-        schema:
-          type: string
-          default: ""
+          type: integer
+          format: int64
       responses:
         "200":
           description: 200 OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserResponse'
-        "500":
-          description: Internal Server Error
+                $ref: '#/components/schemas/MdmUserDetailResponse'
 components:
   schemas:
-    UserResponse:
+    MdmUserDetailResponse:
       type: object
       properties:
-        userId:
+        userName:
           type: string
-          description: ユーザーID
-          example: MDM00001
+        versionId:
+          type: string
         lastName:
           type: string
-          description: 姓
-          example: Yamada
         firstName:
           type: string
-          description: 名
-          example: Taro
-        role:
+        emailAddress:
           type: string
-          description: 役割
-          example: OPERATOR
-      description: ユーザー情報取得のレスポンス
+        userNumber:
+          type: string
+        staticUserId:
+          type: string
+      description: ユーザー情報詳細のレスポンス
