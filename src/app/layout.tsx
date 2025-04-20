@@ -20,7 +20,9 @@ export default function RootLayout({
         <SWRProvider>
             <NuqsAdapter>
               <Header />
-              <main className="">{children}</main>
+              <div className="min-h-screen flex flex-col items-center p-24">
+                <main >{children}</main>
+              </div>
             </NuqsAdapter>
         </SWRProvider>
       </body>

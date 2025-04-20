@@ -6,6 +6,5 @@
  */
 
 export * from './getUserDetailsParams';
-export * from './login200';
-export * from './loginBody';
-export * from './mdmUserDetailResponse';
+export * from './loginRequest';
+export * from './userRegisterRequest';

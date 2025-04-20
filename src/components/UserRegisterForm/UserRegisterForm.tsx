@@ -7,21 +7,25 @@ import { Button } from '../ui/button'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import userRegisterFormSchema from '@/lib/formSchema'
+import { registerBody } from '@/gen/endpoints/public-auth/public-auth.zod'
+import { useRegister } from '@/gen/endpoints/public-auth/public-auth'
+
+
 
 const UserRegisterForm = () => {
 
   // 1.Formの型を定義する
-  type FormValue = z.infer<typeof userRegisterFormSchema>
+  const formSchema = registerBody
+  type FormValue = z.infer<typeof formSchema>
 
   // 2.Formの型定義をFormに適用する
   const form = useForm<FormValue>(
     {
-      resolver: zodResolver(userRegisterFormSchema), // resolverにzodスキーマを指定することで、zodスキーマを用いた型チェックやバリデーションチェックを行うようになる
-       defaultValues: {
-        firstName: "",
-        lastName: "",
-        emailAddress: "",
+      resolver: zodResolver(formSchema),       
+      defaultValues: {
+        first_name: "",
+        last_name: "",
+        email_address: "",
         password: ""
        },
     }
@@ -29,20 +33,29 @@ const UserRegisterForm = () => {
 
   const {control, handleSubmit} = form
 
-  const onSubmit = () => {
+  const { trigger } = useRegister()
+
+  const onSubmit = (formData: FormValue) => {
     // ここでクライアントコード呼び出し処理追加
+    trigger(
+      {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email_address: formData.email_address,
+        password: formData.password
+      }
+    )
   }
 
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-  
         <FormField
           control={control}
-          name="firstName"
+          name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`First Name`}</FormLabel>
+              <FormLabel>{`First Name(名)`}</FormLabel>
               <FormControl>
                 <Input placeholder="TARO" {...field} />
               </FormControl>
@@ -54,10 +67,10 @@ const UserRegisterForm = () => {
         />
         <FormField
           control={control}
-          name="lastName"
+          name="last_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`Last Name`}</FormLabel>
+              <FormLabel>{`Last Name(姓)`}</FormLabel>
               <FormControl>
                 <Input placeholder="YAMADA" {...field} />
               </FormControl>
@@ -69,7 +82,7 @@ const UserRegisterForm = () => {
         />
         <FormField
           control={control}
-          name="emailAddress"
+          name="email_address"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{`Email`}</FormLabel>
@@ -97,8 +110,7 @@ const UserRegisterForm = () => {
             </FormItem>
           )}
         />
-
-        <Button type="submit">送信</Button>
+        <Button type="submit">新規登録</Button>
       </form>
     </Form>
   )
