@@ -4,15 +4,18 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import useSwr from 'swr';
 import type {
-  Key,
-  SWRConfiguration
+  Arguments,
+  Key
 } from 'swr';
 
+import useSWRMutation from 'swr/mutation';
 import type {
-  GetUserDetailsParams,
-  MdmUserDetailResponse
+  SWRMutationConfiguration
+} from 'swr/mutation';
+
+import type {
+  GetUserDetailsParams
 } from '../../models';
 
 import { customInstance } from '../../../lib/apiClient';
@@ -23,15 +26,11 @@ import { customInstance } from '../../../lib/apiClient';
 
 
   
-/**
- * ユーザー情報詳細を取得する
- * @summary ユーザー情報詳細取得
- */
 export const getUserDetails = (
     params: GetUserDetailsParams,
  options?: SecondParameter<typeof customInstance>) => {
-    return customInstance<MdmUserDetailResponse>(
-    {url: `/api/v1/user/details`, method: 'GET',
+    return customInstance<string>(
+    {url: `/api/v1/user/details`, method: 'POST',
         params
     },
     options);
@@ -39,24 +38,26 @@ export const getUserDetails = (
 
 
 
-export const getGetUserDetailsKey = (params: GetUserDetailsParams,) => [`/api/v1/user/details`, ...(params ? [params]: [])] as const;
+export const getGetUserDetailsMutationFetcher = (params: GetUserDetailsParams, options?: SecondParameter<typeof customInstance>) => {
+  return (_: Key, __: { arg: Arguments }): Promise<string> => {
+    return getUserDetails(params, options);
+  }
+}
+export const getGetUserDetailsMutationKey = (params: GetUserDetailsParams,) => [`/api/v1/user/details`, ...(params ? [params]: [])] as const;
 
-export type GetUserDetailsQueryResult = NonNullable<Awaited<ReturnType<typeof getUserDetails>>>
-export type GetUserDetailsQueryError = unknown
+export type GetUserDetailsMutationResult = NonNullable<Awaited<ReturnType<typeof getUserDetails>>>
+export type GetUserDetailsMutationError = unknown
 
-/**
- * @summary ユーザー情報詳細取得
- */
 export const useGetUserDetails = <TError = unknown>(
-  params: GetUserDetailsParams, options?: { swr?:SWRConfiguration<Awaited<ReturnType<typeof getUserDetails>>, TError> & { swrKey?: Key, enabled?: boolean }, request?: SecondParameter<typeof customInstance> }
+  params: GetUserDetailsParams, options?: { swr?:SWRMutationConfiguration<Awaited<ReturnType<typeof getUserDetails>>, TError, Key, Arguments, Awaited<ReturnType<typeof getUserDetails>>> & { swrKey?: string }, request?: SecondParameter<typeof customInstance>}
 ) => {
+
   const {swr: swrOptions, request: requestOptions} = options ?? {}
 
-  const isEnabled = swrOptions?.enabled !== false
-  const swrKey = swrOptions?.swrKey ?? (() => isEnabled ? getGetUserDetailsKey(params) : null);
-  const swrFn = () => getUserDetails(params, requestOptions)
+  const swrKey = swrOptions?.swrKey ?? getGetUserDetailsMutationKey(params);
+  const swrFn = getGetUserDetailsMutationFetcher(params, requestOptions);
 
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(swrKey, swrFn, swrOptions)
+  const query = useSWRMutation(swrKey, swrFn, swrOptions)
 
   return {
     swrKey,
