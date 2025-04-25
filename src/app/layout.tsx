@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { SWRProvider } from '../providers/SWRProvider';
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,9 +21,8 @@ export default function RootLayout({
         <SWRProvider>
             <NuqsAdapter>
               <Header />
-              <div className="min-h-screen flex flex-col items-center p-24">
                 <main >{children}</main>
-              </div>
+                <Toaster />
             </NuqsAdapter>
         </SWRProvider>
       </body>
