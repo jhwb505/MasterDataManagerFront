@@ -10,7 +10,6 @@ const TopPage = () => {
     <h2 className="font-semibold text-2xl mb-4">ログイン</h2>  
     <LoginForm />
   </div>
-    
   )
 }
 
