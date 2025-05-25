@@ -1,14 +1,42 @@
+'use client'
+
 import LoginForm from '@/components/LoginForm/LoginForm'
 import UserRegisterForm from '@/components/UserRegisterForm/UserRegisterForm'
-import React from 'react'
+import React, {useState} from 'react'
 
 const TopPage = () => {
+  const [activeTab, setActiveTab] = useState('ログイン');
   return (
-  <div className="w-64 mx-auto">
-    <h2 className="font-semibold text-2xl mb-4">新規登録</h2>
-    <UserRegisterForm />
-    <h2 className="font-semibold text-2xl mb-4">ログイン</h2>  
-    <LoginForm />
+  <div className="max-w-lg mx-auto mt-10 pt-12">
+    {/* タブヘッダー */}
+    <div className="flex border-gray-300">
+        <button
+          className={`w-full text-sm font-medium ${
+            activeTab === "ログイン"
+              ? 'text-black border-b-4 border-black'
+              : 'text-gray-400 border-b-4 hover:text-gray-600'
+          }`}
+          onClick={() => setActiveTab('ログイン')}
+        >
+          ログイン
+        </button>
+        <button
+          className={`w-full text-sm font-medium ${
+            activeTab === '会員登録'
+              ? 'text-black border-b-4 border-black'
+              : 'text-gray-400 border-b-4 hover:text-gray-600'
+          }`}
+          onClick={() => setActiveTab('会員登録')}
+        >
+          会員登録
+        </button>
+    </div>
+
+    {/* タブコンテンツ */}
+    <div className="w-full mt-20 mx-auto">
+    {activeTab == "会員登録" && <UserRegisterForm />}
+    {activeTab == "ログイン" && <LoginForm />}
+    </div>
   </div>
     
   )

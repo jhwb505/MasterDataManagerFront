@@ -1,6 +1,6 @@
 'use client'
 
-import { form, Button } from '@heroui/react'
+import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -44,13 +44,13 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <FormField
         control={control}
         name="username"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{`Email`}</FormLabel>
+            <FormLabel>{`メールアドレス`}</FormLabel>
             <FormControl>
               <Input placeholder="MasterDataManager@gmail.com" {...field} />
             </FormControl>
@@ -65,9 +65,9 @@ const LoginForm = () => {
         name="password"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{`Password`}</FormLabel>
+            <FormLabel>{`パスワード`}</FormLabel>
             <FormControl>
-              <Input placeholder="p@ssw0rd" type='password' {...field} />
+              <Input  placeholder="password" type='password' {...field} />
             </FormControl>
             <FormDescription>
             </FormDescription>
@@ -75,7 +75,8 @@ const LoginForm = () => {
           </FormItem>
         )}
       />
-      <Button type="submit">ログイン</Button>
+      <Button className="mt-10" type="submit">ログイン</Button>
+      <a href="#" className="flex flex-col items-center text-xs font-medium text-gray-600 hover:underline">ログインID・パスワードをお忘れの方</a>
     </form>
   </Form>
   )
