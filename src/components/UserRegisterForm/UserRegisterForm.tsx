@@ -55,7 +55,7 @@ const UserRegisterForm = () => {
           name="last_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`Last Name(姓)`}</FormLabel>
+              <FormLabel>{`姓`}</FormLabel>
               <FormControl>
                 <Input placeholder="YAMADA" {...field} />
               </FormControl>
@@ -70,7 +70,7 @@ const UserRegisterForm = () => {
           name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`First Name(名)`}</FormLabel>
+              <FormLabel>{`名`}</FormLabel>
               <FormControl>
                 <Input placeholder="TARO" {...field} />
               </FormControl>

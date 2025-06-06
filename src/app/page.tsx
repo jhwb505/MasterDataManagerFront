@@ -7,13 +7,13 @@ import React, {useState} from 'react'
 const TopPage = () => {
   const [activeTab, setActiveTab] = useState('ログイン');
   return (
-  <div className="max-w-lg mx-auto mt-10 pt-12">
+  <div className="max-w-lg mx-auto mt-10 pt-3">
     {/* タブヘッダー */}
     <div className="flex border-gray-300">
         <button
           className={`w-full text-sm font-medium ${
             activeTab === "ログイン"
-              ? 'text-black border-b-4 border-black'
+              ? 'text-black border-b-4 border-black transition-all duration-500 ease-in-out transform'
               : 'text-gray-400 border-b-4 hover:text-gray-600'
           }`}
           onClick={() => setActiveTab('ログイン')}
@@ -23,7 +23,7 @@ const TopPage = () => {
         <button
           className={`w-full text-sm font-medium ${
             activeTab === '会員登録'
-              ? 'text-black border-b-4 border-black'
+              ? 'text-black border-b-4 border-black transition-all duration-500 ease-in-out transform'
               : 'text-gray-400 border-b-4 hover:text-gray-600'
           }`}
           onClick={() => setActiveTab('会員登録')}

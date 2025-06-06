@@ -76,7 +76,7 @@ const LoginForm = () => {
         )}
       />
       <Button className="mt-10" type="submit">ログイン</Button>
-      <a href="#" className="flex flex-col items-center text-xs font-medium text-gray-600 hover:underline">ログインID・パスワードをお忘れの方</a>
+      <a href="#" className="flex flex-col items-center text-xs font-medium text-gray-600 underline hover:no-underline">ログインID・パスワードをお忘れの方</a>
     </form>
   </Form>
   )
