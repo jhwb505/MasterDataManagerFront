@@ -38,7 +38,6 @@ const TopPage = () => {
     {activeTab == "ログイン" && <LoginForm />}
     </div>
   </div>
-    
   )
 }
 

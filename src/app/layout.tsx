@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
 import { SWRProvider } from '../providers/SWRProvider';
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "react-hot-toast";
+import { Providers } from "@/providers/HeroUIProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,11 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body>
+      <body className="h-full m-0">
         <SWRProvider>
             <NuqsAdapter>
-              <Header />
-                <main >{children}</main>
+                <Providers>
+                  <main>{children}</main>
+                </Providers>
                 <Toaster />
             </NuqsAdapter>
         </SWRProvider>
