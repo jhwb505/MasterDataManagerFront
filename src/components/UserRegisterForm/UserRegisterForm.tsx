@@ -49,15 +49,15 @@ const UserRegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <FormField
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <FormField
           control={control}
-          name="first_name"
+          name="last_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`First Name(名)`}</FormLabel>
+              <FormLabel>{`姓`}</FormLabel>
               <FormControl>
-                <Input placeholder="TARO" {...field} />
+                <Input placeholder="YAMADA" {...field} />
               </FormControl>
               <FormDescription>
               </FormDescription>
@@ -67,12 +67,12 @@ const UserRegisterForm = () => {
         />
         <FormField
           control={control}
-          name="last_name"
+          name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`Last Name(姓)`}</FormLabel>
+              <FormLabel>{`名`}</FormLabel>
               <FormControl>
-                <Input placeholder="YAMADA" {...field} />
+                <Input placeholder="TARO" {...field} />
               </FormControl>
               <FormDescription>
               </FormDescription>
@@ -85,7 +85,7 @@ const UserRegisterForm = () => {
           name="email_address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`Email`}</FormLabel>
+              <FormLabel>{`メールアドレス`}</FormLabel>
               <FormControl>
                 <Input placeholder="MasterDataManager@gmail.com" {...field} />
               </FormControl>
@@ -100,9 +100,9 @@ const UserRegisterForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{`Password`}</FormLabel>
+              <FormLabel>{`パスワード`}</FormLabel>
               <FormControl>
-                <Input placeholder="p@ssw0rd" type='password' {...field} />
+                <Input placeholder="password" type='password' {...field} />
               </FormControl>
               <FormDescription>
               </FormDescription>
@@ -110,7 +110,7 @@ const UserRegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">新規登録</Button>
+        <Button className="mt-10" type="submit">新規登録</Button>
       </form>
     </Form>
   )
